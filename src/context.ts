@@ -1,7 +1,7 @@
 import React from "@rbxts/react";
-import type { TooltipContext } from "./types";
+import type { TooltipContext as ITooltipContext } from "./types";
 
-const TooltipContext = React.createContext<TooltipContext>({
+export const TooltipContext = React.createContext<ITooltipContext>({
 	visible: false,
 	lastHide: 0,
 	changeTooltip: () => {},
@@ -9,4 +9,4 @@ const TooltipContext = React.createContext<TooltipContext>({
 	changeVisible: () => {},
 });
 
-export = TooltipContext;
+export default TooltipContext;
