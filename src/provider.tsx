@@ -59,7 +59,7 @@ export default function TooltipProvider({ hideDelay = 1, children }: PropsWithCh
 		isVisibleRef.current = isVisible;
 	}, [isVisible]);
 
-	const Component = tooltip?.component ?? (() => <></>);
+	const Component = tooltip ?? (() => <></>);
 
 	return (
 		<TooltipContext.Provider value={context}>

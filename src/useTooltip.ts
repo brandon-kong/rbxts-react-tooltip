@@ -1,6 +1,6 @@
 import React, { createContext, useCallback, useContext, useRef, useState } from "@rbxts/react";
 import { UserInputService, RunService } from "@rbxts/services";
-import type { TooltipDirection, UseTooltipParams, TooltipContext } from "./types";
+import type { TooltipDirection, UseTooltipParams, TooltipContext, TooltipComponent } from "./types";
 import useSignal from "./useSignal";
 
 const MARGIN = 30;
@@ -67,9 +67,7 @@ function useTooltip(params?: UseTooltipParams) {
 		// if the last hide was less than 1 seconds ago, skip the delay
 		if (os.time() - context.lastHide < DELAY_SKIP_DURATION) {
 			delayThread.current = task.delay(0, () => {
-				context.changeTooltip({
-					component: params?.component,
-				});
+				context.changeTooltip(params?.component);
 				setIsVisible(true);
 				context.changeVisible(true);
 			});
@@ -77,9 +75,7 @@ function useTooltip(params?: UseTooltipParams) {
 		}
 
 		delayThread.current = task.delay(delay.current, () => {
-			context.changeTooltip({
-				component: params?.component,
-			});
+			context.changeTooltip(params?.component);
 			setIsVisible(true);
 			context.changeVisible(true);
 		});
