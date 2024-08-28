@@ -1,5 +1,5 @@
 {
-	"name": "@rbxts/usetooltip",
+	"name": "@rbxts/tooltip",
 	"version": "1.0.0",
 	"main": "out/init.lua",
 	"scripts": {
