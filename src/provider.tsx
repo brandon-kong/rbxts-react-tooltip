@@ -2,7 +2,33 @@ import React, { type PropsWithChildren, useCallback, useEffect, useMemo, useStat
 import { TooltipComponent, TooltipComponentObject, TooltipProviderProps } from "./types";
 import TooltipContext from "./context";
 
-export default function TooltipProvider({ hideDelay = 1, children }: PropsWithChildren<TooltipProviderProps>) {
+/**
+ * TooltipProvider component provides context for tooltips.
+ * It wraps an element or a set of elements with a context which can be used to group tooltips.
+ *
+ * @param {TooltipProviderProps} props - The props for TooltipProvider.
+ * @param {number} [props.hideDelay=1] - Delay in seconds before hiding the tooltip. Default is 1 second.
+ * @param {React.ReactNode} props.children - The children components.
+ * @returns {JSX.Element} The TooltipProvider component.
+ *
+ * @example
+ * ```tsx
+ * import TooltipProvider from './TooltipProvider';
+ * import Tooltip from './Tooltip';
+ *
+ * function Component() {
+ *   return (
+ *     <TooltipProvider hideDelay={2}>
+ *       <ButtonWithTooltip />
+ *     </TooltipProvider>
+ *   );
+ * }
+ * ```
+ */
+export default function TooltipProvider({
+	hideDelay = 1,
+	children,
+}: PropsWithChildren<TooltipProviderProps>): JSX.Element {
 	const [isVisible, setIsVisible] = useState(false);
 	const [position, setPosition] = useState(new UDim2(0, 0, 0, 0));
 	const [lastHide, setLastHide] = useState(0);
@@ -34,6 +60,11 @@ export default function TooltipProvider({ hideDelay = 1, children }: PropsWithCh
 
 			if (hideThread.current) {
 				task.cancel(hideThread.current);
+			}
+
+			if (hideDelay <= 0) {
+				setTrueVisible(false);
+				return;
 			}
 
 			hideThread.current = task.delay(hideDelay, () => {

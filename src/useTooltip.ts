@@ -44,6 +44,53 @@ const getDirectionPosition = (
 	return new Vector2(X, Y);
 };
 
+/**
+ * Custom hook to manage tooltip visibility and positioning.
+ * Must be used within a TooltipProvider.
+ *
+ * @param {UseTooltipParams} [params] - Optional parameters for the tooltip.
+ * @param {number} [params.delay=0] - Delay in seconds before showing the tooltip.
+ * @param {Vector2} [params.offset=new Vector2(0, 0)] - Offset for the tooltip position.
+ * @param {TooltipDirection} [params.direction] - Direction for the tooltip. If `followMouse` is true, this is ignored.
+ * @param {boolean} [params.followMouse=false] - Whether the tooltip should follow the mouse cursor.
+ * @param {React.ComponentType} [params.component] - The tooltip component to render.
+ * @returns {Object} An object containing methods to show, hide, update position, and update size of the tooltip.
+ * @returns {Function} showTooltip - Function to show the tooltip.
+ * @returns {Function} hideTooltip - Function to hide the tooltip.
+ * @returns {Function} updatePosition - Function to update the tooltip's position based on a GUI object.
+ * @returns {Function} updateSize - Function to figure out the tooltip's relative position based on a GUI object's size.
+ *
+ * @example
+ * ```tsx
+ * import { useTooltip } from './useTooltip';
+ *
+ * function TooltipExample() {
+ *   const { showTooltip, hideTooltip, updatePosition, updateSize } = useTooltip({
+ *     delay: 1,
+ *     offset: new Vector2(10, 10),
+ *     direction: 'top',
+ *     followMouse: true,
+ *     component: MyTooltipComponent,
+ *   });
+ *
+ *   return (
+ *     <textbutton
+ *       Event={{
+ * 	   		MouseEnter: showTooltip,
+ * 	   		MouseLeave: hideTooltip,
+ * 	 	 }}
+ *       ref={updatePosition}
+ *       onResize={updateSize}
+ *       Change={{
+ * 			AbsolutePosition: updatePosition,
+ * 			AbsoluteSize: updateSize,
+ * 		 }}
+ *     >
+ *     </textbutton>
+ *   );
+ * }
+ * ```
+ */
 export function useTooltip(params?: UseTooltipParams) {
 	const context = React.useContext(TooltipContext);
 
