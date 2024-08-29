@@ -1,27 +1,27 @@
-import React, { type PropsWithChildren, useMemo } from "@rbxts/react";
+import React, { type PropsWithChildren, useCallback, useEffect, useMemo, useState, useRef } from "@rbxts/react";
 import { TooltipComponent, TooltipComponentObject, TooltipProviderProps } from "./types";
 import TooltipContext from "./context";
 
 export default function TooltipProvider({ hideDelay = 1, children }: PropsWithChildren<TooltipProviderProps>) {
-	const [isVisible, setIsVisible] = React.useState(false);
-	const [position, setPosition] = React.useState(new UDim2(0, 0, 0, 0));
-	const [lastHide, setLastHide] = React.useState(0);
-	const [trueVisible, setTrueVisible] = React.useState(false);
-	const isVisibleRef = React.useRef(isVisible);
+	const [isVisible, setIsVisible] = useState(false);
+	const [position, setPosition] = useState(new UDim2(0, 0, 0, 0));
+	const [lastHide, setLastHide] = useState(0);
+	const [trueVisible, setTrueVisible] = useState(false);
+	const isVisibleRef = useRef(isVisible);
 
-	const [tooltip, setTooltip] = React.useState<TooltipComponentObject | undefined>();
+	const [tooltip, setTooltip] = useState<TooltipComponentObject | undefined>();
 
-	const hideThread = React.useRef<thread>();
+	const hideThread = useRef<thread>();
 
-	const changePosition = React.useCallback(function (position: UDim2) {
+	const changePosition = useCallback(function (position: UDim2) {
 		setPosition(position);
 	}, []);
 
-	const changeTooltip = React.useCallback(function (tooltip?: TooltipComponentObject) {
+	const changeTooltip = useCallback(function (tooltip?: TooltipComponentObject) {
 		setTooltip(tooltip);
 	}, []);
 
-	const changeVisible = React.useCallback(
+	const changeVisible = useCallback(
 		function (visible: boolean) {
 			setIsVisible(visible);
 
@@ -55,7 +55,7 @@ export default function TooltipProvider({ hideDelay = 1, children }: PropsWithCh
 		};
 	}, [lastHide, isVisible, changePosition, changeVisible]);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		isVisibleRef.current = isVisible;
 	}, [isVisible]);
 
