@@ -1,12 +1,19 @@
-import React, { createContext, useCallback, useContext, useRef, useState } from "@rbxts/react";
+import React, { useCallback, useRef } from "@rbxts/react";
 import { UserInputService, RunService } from "@rbxts/services";
-import type { TooltipDirection, UseTooltipParams, TooltipContext, TooltipComponent } from "./types";
+import type { TooltipDirection, UseTooltipParams } from "./types";
 import useSignal from "./useSignal";
+import TooltipContext from "./context";
 
+const DEFAULT_DIRECTION: TooltipDirection = "top";
 const MARGIN = 30;
 const DELAY_SKIP_DURATION = 1;
 
-const getDirectionPosition = (direction: TooltipDirection, absolutePosition: Vector2, absoluteSize: Vector2) => {
+const getDirectionPosition = (
+	direction: TooltipDirection,
+	absolutePosition: Vector2,
+	absoluteSize: Vector2,
+	offset?: Vector2,
+) => {
 	let X = absolutePosition.X;
 	let Y = absolutePosition.Y;
 
@@ -29,30 +36,26 @@ const getDirectionPosition = (direction: TooltipDirection, absolutePosition: Vec
 			break;
 	}
 
+	if (offset) {
+		X += offset.X;
+		Y += offset.Y;
+	}
+
 	return new Vector2(X, Y);
 };
 
-const TooltipContext = createContext<TooltipContext>({
-	visible: false,
-	lastHide: 0,
-	changeTooltip: () => {},
-	changePosition: () => {},
-	changeVisible: () => {},
-});
-
-function useTooltip(params?: UseTooltipParams) {
-	const context = useContext(TooltipContext);
+export function useTooltip(params?: UseTooltipParams) {
+	const context = React.useContext(TooltipContext);
 
 	if (context === undefined) {
 		error("[useTooltip]: useTooltip must be used within a TooltipProvider");
 	}
 
-	const [isVisible, setIsVisible] = useState(false);
+	const [isVisible, setIsVisible] = React.useState(false);
 
-	const offset = useRef<Vector2>(params?.offset ?? new Vector2(0, 0));
 	const delay = useRef<number>(params?.delay ?? 0);
-	const direction = useRef<TooltipDirection | undefined>(params?.direction);
-	const mousePosition = useRef<Vector2>(new Vector2(0, 0));
+	const offset = useRef<Vector2>(params?.offset ?? new Vector2(0, 0));
+	const direction = useRef<TooltipDirection | undefined>(params?.direction ?? undefined);
 
 	const [absolutePosition, setAbsolutePosition] = React.useState(new Vector2(0, 0));
 	const [absoluteSize, setAbsoluteSize] = React.useState(new Vector2(0, 0));
@@ -67,7 +70,9 @@ function useTooltip(params?: UseTooltipParams) {
 		// if the last hide was less than 1 seconds ago, skip the delay
 		if (os.time() - context.lastHide < DELAY_SKIP_DURATION) {
 			delayThread.current = task.delay(0, () => {
-				context.changeTooltip(params?.component);
+				context.changeTooltip({
+					component: params?.component,
+				});
 				setIsVisible(true);
 				context.changeVisible(true);
 			});
@@ -75,7 +80,9 @@ function useTooltip(params?: UseTooltipParams) {
 		}
 
 		delayThread.current = task.delay(delay.current, () => {
-			context.changeTooltip(params?.component);
+			context.changeTooltip({
+				component: params?.component,
+			});
 			setIsVisible(true);
 			context.changeVisible(true);
 		});
@@ -91,29 +98,21 @@ function useTooltip(params?: UseTooltipParams) {
 	}, []);
 
 	useSignal(RunService.RenderStepped, () => {
-		if (params?.followMouse) {
+		if (params?.followMouse === true) {
 			const location = UserInputService.GetMouseLocation();
-
-			if (!isVisible) {
-				return;
-			}
-
 			const [X, Y] = [location.X + offset.current.X, location.Y + offset.current.Y];
-
-			mousePosition.current = new Vector2(X, Y);
 			context.changePosition(new UDim2(0, X, 0, Y));
 			return;
-		} else if (direction.current !== undefined) {
+		} else {
+			direction.current = params?.direction ?? DEFAULT_DIRECTION;
+
 			if (!isVisible) {
 				return;
 			}
 
-			const position = getDirectionPosition(direction.current, absolutePosition, absoluteSize);
+			const position = getDirectionPosition(direction.current, absolutePosition, absoluteSize, offset.current);
 
-			const [X, Y] = [position.X + offset.current.X, position.Y + offset.current.Y];
-
-			mousePosition.current = new Vector2(X, Y);
-			context.changePosition(new UDim2(0, X, 0, Y));
+			context.changePosition(new UDim2(0, position.X, 0, position.Y));
 			return;
 		}
 	});

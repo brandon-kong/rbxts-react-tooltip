@@ -1,5 +1,5 @@
 import React, { type PropsWithChildren, useMemo } from "@rbxts/react";
-import { TooltipComponent, TooltipProviderProps } from "./types";
+import { TooltipComponent, TooltipComponentObject, TooltipProviderProps } from "./types";
 import TooltipContext from "./context";
 
 export default function TooltipProvider({ hideDelay = 1, children }: PropsWithChildren<TooltipProviderProps>) {
@@ -9,7 +9,7 @@ export default function TooltipProvider({ hideDelay = 1, children }: PropsWithCh
 	const [trueVisible, setTrueVisible] = React.useState(false);
 	const isVisibleRef = React.useRef(isVisible);
 
-	const [tooltip, setTooltip] = React.useState<TooltipComponent | undefined>();
+	const [tooltip, setTooltip] = React.useState<TooltipComponentObject | undefined>();
 
 	const hideThread = React.useRef<thread>();
 
@@ -17,7 +17,7 @@ export default function TooltipProvider({ hideDelay = 1, children }: PropsWithCh
 		setPosition(position);
 	}, []);
 
-	const changeTooltip = React.useCallback(function (tooltip?: TooltipComponent) {
+	const changeTooltip = React.useCallback(function (tooltip?: TooltipComponentObject) {
 		setTooltip(tooltip);
 	}, []);
 
@@ -59,7 +59,7 @@ export default function TooltipProvider({ hideDelay = 1, children }: PropsWithCh
 		isVisibleRef.current = isVisible;
 	}, [isVisible]);
 
-	const Component = tooltip ?? (() => <></>);
+	const Component: TooltipComponent = tooltip?.component ?? (() => <></>);
 
 	return (
 		<TooltipContext.Provider value={context}>

@@ -8,6 +8,10 @@ export type TooltipComponentProps = {
 	visible: boolean;
 };
 
+export type TooltipComponentObject = {
+	component?: TooltipComponent;
+};
+
 export type TooltipComponent = (params: TooltipComponentProps) => JSX.Element;
 
 export type UseTooltipParams = {
@@ -23,7 +27,7 @@ export type TooltipContext = {
 	lastHide: number;
 	changePosition: (position: UDim2) => void;
 	changeVisible: (visible: boolean) => void;
-	changeTooltip: (tooltip?: TooltipComponent) => void;
+	changeTooltip: (tooltip?: TooltipComponentObject) => void;
 };
 
 export interface TooltipProviderProps {
