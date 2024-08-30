@@ -4,7 +4,7 @@ import { defineConfig } from "vitepress";
 export default defineConfig({
 	title: "@rbxts/react-tooltip",
 	description: "Documentation for NPM package: @rbxts/react-tooltip",
-	base: "brandon-kong.github.io/rbxts-react-tooltip/",
+	base: "/rbxts-react-tooltip/",
 	themeConfig: {
 		// https://vitepress.dev/reference/default-theme-config
 		nav: [
