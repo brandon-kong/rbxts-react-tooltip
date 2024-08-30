@@ -18,24 +18,24 @@ import React from "@rbxts/react";
 import type { TooltipProps } from "@rbxts/react-tooltip";
 
 export const Tooltip = ({ position, visible }: TooltipProps) => {
-    return (
-        <frame
-            Visible={visible}
-            Position={position}
-            BackgroundTransparency={0.5}
-            BackgroundColor3={Color3.fromRGB(0, 0, 0)}
-            BorderSizePixel={0}
-            Size={new UDim2(0, 100, 0, 50)}
-        >
-            <uilistlayout FillDirection="Vertical" />
-            <textlabel
-                Text="Tooltip Content"
-                TextColor3={Color3.fromRGB(255, 255, 255)}
-                BackgroundTransparency={1}
-                Size={new UDim2(1, 0, 1, 0)}
-            />
-        </frame>
-    );
+	return (
+		<frame
+			Visible={visible}
+			Position={position}
+			BackgroundTransparency={0.5}
+			BackgroundColor3={Color3.fromRGB(0, 0, 0)}
+			BorderSizePixel={0}
+			Size={new UDim2(0, 100, 0, 50)}
+		>
+			<uilistlayout FillDirection="Vertical" />
+			<textlabel
+				Text="Tooltip Content"
+				TextColor3={Color3.fromRGB(255, 255, 255)}
+				BackgroundTransparency={1}
+				Size={new UDim2(1, 0, 1, 0)}
+			/>
+		</frame>
+	);
 };
 ```
 
@@ -52,17 +52,17 @@ import React from "@rbxts/react";
 import type { TooltipProps } from "@rbxts/react-tooltip";
 
 export const Tooltip = ({ position, visible, text }: TooltipProps & { text: string }) => {
-    return (
-        <textlabel
-            Text={text}
-            TextColor3={Color3.fromRGB(255, 255, 255)}
-            BackgroundTransparency={0}
-            Size={new UDim2(1, 0, 1, 0)}
-            AutomaticSize={Enum.AutomaticSize.X}
-        >
-            <uicorner CornerRadius={new UDim(0, 4)} />
-        </textlabel>
-    );
+	return (
+		<textlabel
+			Text={text}
+			TextColor3={Color3.fromRGB(255, 255, 255)}
+			BackgroundTransparency={0}
+			Size={new UDim2(1, 0, 1, 0)}
+			AutomaticSize={Enum.AutomaticSize.X}
+		>
+			<uicorner CornerRadius={new UDim(0, 4)} />
+		</textlabel>
+	);
 };
 ```
 
@@ -70,22 +70,22 @@ In the `useTooltip` hook, you can pass additional properties to the tooltip comp
 
 ```tsx
 const Button = ({ text }: { text: string }) => {
-    const { showTooltip, hideTooltip, updatePosition, updateSize } = useTooltip({
-        component: (props) => <Tooltip {...props} text={text} />,
-        text,
-    });
+	const { showTooltip, hideTooltip, updatePosition, updateSize } = useTooltip({
+		component: (props) => <Tooltip {...props} text={text} />,
+		text,
+	});
 
-    return (
-        <textbutton
-            Text={text}
-            MouseEnter={showTooltip}
-            MouseLeave={hideTooltip}
-            Change={{
-                AbsolutePosition: updatePosition,
-                AbsoluteSize: updateSize,
-            }}
-        />
-    );
+	return (
+		<textbutton
+			Text={text}
+			MouseEnter={showTooltip}
+			MouseLeave={hideTooltip}
+			Change={{
+				AbsolutePosition: updatePosition,
+				AbsoluteSize: updateSize,
+			}}
+		/>
+	);
 };
 ```
 
@@ -100,33 +100,42 @@ The `visible` property is where `react-tooltip` shows its true power. In scenari
 Here's an example of how you can use the `visible` property to apply a fade-in and fade-out animation to the tooltip:
 
 ```tsx
-import { useSpring } from "..." // Import your favorite declarative animation library here
+import { TooltipProps } from "@rbxts/react-tooltip";
+import { useSpring } from "..."; // Import your favorite declarative animation library here
 
-export const Tooltip = ({ position, visible, text }: TooltipProps & { text: string }) => {
-    
-    const opacity = useSpring(visible ? 1 : 0);
+export const Tooltip = ({ position, visible, text }: TooltipComponentProps & { text: string }) => {
+	const opacity = useSpring(visible ? 0 : 1);
 
-    return (
-        <canvasgroup
-            GroupTransparency={opacity} // Use the opacity value from the animation library to apply a smooth fade-in and fade-out effect
-
-            Position={position}
-            BackgroundTransparency={1}
-            Size={new UDim2(0, 100, 0, 50)}
-            BackgroundTransparency={1}
-            BorderSizePixel={0}
-            BackgroundColor3={Color3.fromRGB(0, 0, 0)}
-            Transparency={opacity}
-            Size={new UDim2(0, 100, 0, 50)}
-        >
-            <uilistlayout FillDirection="Vertical" />
-            <textlabel
-                Text={text}
-                TextColor3={Color3.fromRGB(255, 255, 255)}
-                BackgroundTransparency={1}
-                Size={new UDim2(1, 0, 1, 0)}
-            />
-        </canvasgroup>
-    );
+	return (
+		<canvasgroup
+			GroupTransparency={opacity} // Use the opacity value from the animation library to apply a smooth fade-in and fade-out effect
+			Position={position}
+			Size={new UDim2(0, 0, 0, 40)}
+			BorderSizePixel={0}
+			BackgroundColor3={new Color3(0, 0, 0)}
+			AutomaticSize={Enum.AutomaticSize.X}
+			AnchorPoint={new Vector2(0.5, 0.5)}
+		>
+			<uipadding
+				PaddingTop={new UDim(0, 4)}
+				PaddingBottom={new UDim(0, 4)}
+				PaddingLeft={new UDim(0, 8)}
+				PaddingRight={new UDim(0, 8)}
+			/>
+			<uicorner CornerRadius={new UDim(0, 4)} />
+			<textlabel
+				Text={text}
+				TextColor3={new Color3(1, 1, 1)}
+				BackgroundTransparency={1}
+				Size={new UDim2(0, 0, 1, 0)}
+				TextScaled={true}
+				AutomaticSize={Enum.AutomaticSize.X}
+			/>
+		</canvasgroup>
+	);
 };
 ```
+
+Result:
+
+![Tooltip Example](/public/videos/animated-tooltip.mp4)
