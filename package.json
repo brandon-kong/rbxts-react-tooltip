@@ -1,6 +1,6 @@
 {
 	"name": "@rbxts/react-tooltip",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"main": "out/init.lua",
 	"scripts": {
 		"build": "rbxtsc",
@@ -20,6 +20,8 @@
 		"react-tooltip",
 		"rbxts"
 	],
+	"homepage": "https://github.brandondkong.com/rbxts-react-tooltip",
+	"repository": "https://github.com/brandon-kong/rbxts-react-tooltip",
 	"author": "brandon-kong",
 	"license": "MIT",
 	"description": "A tooltip library for Roblox UIs using React",
