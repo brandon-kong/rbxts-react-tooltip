@@ -67,6 +67,8 @@ const Button = ({ text }: { text: string }) => {
 
 That's it! You've successfully set up React Tooltip in your Roblox game. You can now customize the appearance and behavior of your tooltips to fit your game's style and needs.
 
+See the [Building a Tooltip Component](/docs/tooltip/custom-tooltip) guide for more information on how to create a custom tooltip component.
+
 See the [API Reference](/docs/installation) for more information on how to use React Tooltip.
 
 ## Note

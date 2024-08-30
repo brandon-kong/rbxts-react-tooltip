@@ -69,6 +69,10 @@ export const Tooltip = ({ position, visible, text }: TooltipProps & { text: stri
 In the `useTooltip` hook, you can pass additional properties to the tooltip component:
 
 ```tsx
+import React from "@rbxts/react";
+import { useTooltip } from "@rbxts/react-tooltip";
+import { Tooltip } from "..."; // Import your tooltip component here
+
 const Button = ({ text }: { text: string }) => {
 	const { showTooltip, hideTooltip, updatePosition, updateSize } = useTooltip({
 		component: (props) => <Tooltip {...props} text={text} />,

@@ -13,10 +13,16 @@
 		"docs:build": "vitepress build docs",
 		"docs:preview": "vitepress preview docs"
 	},
-	"keywords": [],
+	"keywords": [
+		"roblox",
+		"tooltip",
+		"react",
+		"react-tooltip",
+		"rbxts"
+	],
 	"author": "brandon-kong",
 	"license": "MIT",
-	"description": "",
+	"description": "A tooltip library for Roblox UIs using React",
 	"types": "out/index.d.ts",
 	"files": [
 		"out",

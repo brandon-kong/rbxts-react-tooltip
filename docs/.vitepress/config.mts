@@ -10,6 +10,7 @@ export default defineConfig({
 		nav: [
 			{ text: "Home", link: "/" },
 			{ text: "Examples", link: "/markdown-examples" },
+			{ text: "API Reference", link: "/api" },
 		],
 
 		sidebar: [
@@ -29,8 +30,25 @@ export default defineConfig({
 					{ text: "Building a Custom Tooltip", link: "/docs/tooltip/custom-tooltip" },
 				],
 			},
+
+			{
+				text: "Examples",
+				items: [
+					{ text: "Animated Tooltip", link: "/docs/examples/animated" },
+					{ text: "Tooltips with Other Inputs", link: "/docs/examples/other-inputs" },
+				],
+			},
+
+			{
+				text: "API Reference",
+				link: "/api",
+			},
+			{
+				text: "Storybook",
+				link: "/storybook",
+			},
 		],
 
-		socialLinks: [{ icon: "github", link: "https://github.com/vuejs/vitepress" }],
+		socialLinks: [{ icon: "github", link: "https://github.com/brandon-kong/rbxts-react-tooltip" }],
 	},
 });
