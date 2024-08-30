@@ -33,3 +33,13 @@ const TextBox = ({ text }: { text: string }) => {
 	);
 };
 ```
+
+## Behaviors
+
+### Resizing
+
+If the `useTooltip`'s `followMouse` option is set to `false`, the tooltip will automatically adjust its position based
+on the position and size of the target element, thanks to the `updatePosition` and `updateSize` functions returned from
+the hook. This is useful for elements that change size or position, like text boxes.
+
+![Resizing Tooltip](/videos/other-inputs-resizing.mp4)
