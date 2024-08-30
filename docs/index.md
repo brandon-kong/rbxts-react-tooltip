@@ -3,12 +3,12 @@
 layout: home
 
 hero:
-    name: "Roblox Tooltip"
+    name: "@rbxts/react-tooltip"
     tagline: Powerful and flexible tooltips for Roblox games
     actions:
         - theme: brand
           text: Get Started
-          link: /guide
+          link: /docs/introduction
         - theme: alt
           text: API Reference
           link: /api

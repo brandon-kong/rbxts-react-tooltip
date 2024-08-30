@@ -2,8 +2,8 @@ import { defineConfig } from "vitepress";
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-	title: "@rbxts/tooltip",
-	description: "Documentation for NPM package: @rbxts/tooltip",
+	title: "@rbxts/react-tooltip",
+	description: "Documentation for NPM package: @rbxts/react-tooltip",
 	themeConfig: {
 		// https://vitepress.dev/reference/default-theme-config
 		nav: [
@@ -13,10 +13,19 @@ export default defineConfig({
 
 		sidebar: [
 			{
-				text: "Examples",
+				text: "Get Started",
 				items: [
-					{ text: "Markdown Examples", link: "/markdown-examples" },
-					{ text: "Runtime API Examples", link: "/api-examples" },
+					{ text: "Introduction", link: "/docs/introduction" },
+					{ text: "Installation", link: "/docs/installation" },
+				],
+			},
+
+			{
+				text: "Tooltip",
+				items: [
+					{ text: "TooltipProvider", link: "/docs/tooltip/provider" },
+					{ text: "useTooltip", link: "/docs/tooltip/useTooltip" },
+					{ text: "Building a Custom Tooltip", link: "/docs/tooltip/custom-tooltip" },
 				],
 			},
 		],

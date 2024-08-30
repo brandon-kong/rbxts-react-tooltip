@@ -6,7 +6,9 @@
 		"build": "rbxtsc",
 		"watch": "rbxtsc -w",
 		"prepublishOnly": "npm run build",
-		"format": "prettier --write .",
+		"format:package": "prettier --write ./src",
+		"format:docs": "prettier --write docs",
+		"format": "npm run format:package && npm run format:docs",
 		"docs:dev": "vitepress dev docs",
 		"docs:build": "vitepress build docs",
 		"docs:preview": "vitepress preview docs"

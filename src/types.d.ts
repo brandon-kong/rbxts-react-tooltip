@@ -3,7 +3,7 @@ import useTooltip from "./useTooltip";
 
 export type TooltipDirection = "top" | "bottom" | "left" | "right";
 
-export type TooltipComponentProps = {
+export type TooltipProps = {
 	position: UDim2;
 	visible: boolean;
 };
@@ -12,7 +12,7 @@ export type TooltipComponentObject = {
 	component?: TooltipComponent;
 };
 
-export type TooltipComponent = (params: TooltipComponentProps) => JSX.Element;
+export type TooltipComponent = (params: TooltipProps) => JSX.Element;
 
 export type UseTooltipParams = {
 	offset?: Vector2;
