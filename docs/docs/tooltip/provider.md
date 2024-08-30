@@ -10,7 +10,7 @@ For example, rather than wrapping your _entire_ UI in the `TooltipProvider` comp
 
 This allows you to have more control over where and how tooltips are displayed in your game.
 
-See the [Examples](/examples) page for more examples of how to use the `TooltipProvider` component.
+See the [Examples](/docs/installation) page for more examples of how to use the `TooltipProvider` component.
 
 ## Configuration
 
